@@ -19,13 +19,14 @@ def main():
     train_transforms = get_transforms(train=True)
     val_transforms = get_transforms(train=False)
 
-    # Load datasets in readable format.
+    # for further implementation, baseline cnn has classification 'disease' or 'not disease'
     class_names = [
         "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration",
         "Mass", "Nodule", "Pneumonia", "Pneumothorax",
         "Consolidation", "Edema", "Emphysema", "Fibrosis",
         "Pleural_Thickening", "Hernia"
     ]
+
     train_dataset = ChestXrayDataset(train_csv, img_dir, train_transforms, class_names)
     val_dataset = ChestXrayDataset(val_csv, img_dir, val_transforms, class_names)
 
