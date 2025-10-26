@@ -2,6 +2,10 @@
 
 from torchvision import transforms
 
+# for milestone 1: baseline model for binary classification
+class_name = ["Disease"] 
+# replace all disease labels in csv file to this
+
 def get_transforms(train=True):
     # Transform images in training dataset.
     if train:
