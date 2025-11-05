@@ -6,14 +6,27 @@ from PIL import Image
 from torch.utils.data import Dataset
 
 class ChestXrayDataset(Dataset):
-    def __init__(self, csv_file, img_dir, transform, class_names):
-        self.data = pd.read_csv(csv_file)  # Load CSV with image names and labels.
-        self.img_dir = img_dir  # Directory containing images  
-        self.transform = transform  # Image transformations
+    def __init__(self, csv_file, img_dir, transform, class_names, file_list=None):
+        """
+        Args:
+            csv_file: Path to the CSV file with image labels (e.g., DATA_ENTRY_2017.CSV).
+            img_dir: Directory with all the images.
+            transform: Transformations to apply to the images.
+            class_names: List of class names for multi-label classification.
+            file_list: Path to a text file containing the list of image filenames to include.
+        """
+        self.data = pd.read_csv(csv_file)  # Load the CSV file
+        self.img_dir = img_dir
+        self.transform = transform
         self.class_names = class_names
 
-        # Convert multi-label strings into binary columns for each class.
-        # E.g., "Atelectasis|Effusion" -> [1, 0, 1, 0, 0, 0, ..., 0]
+        # Filter the data based on the file list (if provided)
+        if file_list:
+            with open(file_list, "r") as f:
+                valid_files = set(f.read().splitlines())
+            self.data = self.data[self.data["Image Index"].isin(valid_files)]
+
+        # Convert multi-label strings into binary columns for each class
         for label in self.class_names:
             self.data[label] = self.data["Finding Labels"].apply(lambda x: 1.0 if label in x else 0.0)
     
