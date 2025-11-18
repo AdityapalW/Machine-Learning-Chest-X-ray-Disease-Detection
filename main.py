@@ -1,7 +1,8 @@
 import torch
-from torch.utils.data import DataLoader
+from sklearn.model_selection import train_test_split
 from src.datasets.dataset import ChestXrayDataset
 from src.datasets.dataloader import get_dataloader
+from src.datasets.utils import load_file_list
 from src.preprocessing.preprocess import get_transforms
 from src.models.network import get_model
 from src.training.loss import get_loss_function
@@ -9,14 +10,17 @@ from src.training.train import train_model
 
 def main():
     train_csv = "data/raw/DATA_ENTRY_2017.CSV"  # CSV file with image labels
-    train_val_list = "data/raw/TRAIN_VAL_LIST_NIH.TXT"  # File list for training/validation
-    test_list = "data/raw/TEST_LIST_NIH.TXT"  # File list for testing
+    train_val_files = "data/raw/TRAIN_VAL_LIST_NIH.TXT"  # File list for training/validation
+    test_files = "data/raw/TEST_LIST_NIH.TXT"  # File list for testing
     bbox_csv = "data/raw/BBOX_LIST_2017_OFFICIAL_NIH.CSV"  # Bounding box annotations (not used in main)
     img_dir = "data/raw/images-224/images-224/"  # Directory containing the images
     num_epochs = 10
     batch_size = 32
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available, else CPU
     lr = 1e-4  # Learning rate for optimizer
+
+    train_val_list = load_file_list(train_val_files)
+    train_list, val_list = train_test_split(train_val_list, test_size=0.15, shuffle=True, random_state=42)
 
     # Get transforms for training and validation
     train_transforms = get_transforms(train=True)  # Applies augmentation for training
@@ -31,8 +35,8 @@ def main():
     ]
 
     # Create datasets, filtering by file lists
-    train_dataset = ChestXrayDataset(train_csv, img_dir, train_transforms, class_names, file_list=train_val_list)
-    val_dataset = ChestXrayDataset(train_csv, img_dir, val_transforms, class_names, file_list=test_list)
+    train_dataset = ChestXrayDataset(train_csv, img_dir, train_transforms, class_names, file_list=train_list)
+    val_dataset = ChestXrayDataset(train_csv, img_dir, val_transforms, class_names, file_list=val_list)
 
     # Create DataLoaders for batching
     train_loader = get_dataloader(train_dataset, batch_size=batch_size, num_workers=2)  # Shuffles and batches training data

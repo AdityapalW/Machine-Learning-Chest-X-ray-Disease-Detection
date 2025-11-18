@@ -21,9 +21,17 @@ class ChestXrayDataset(Dataset):
         self.class_names = class_names
 
         # Filter the data based on the file list (if provided)
-        if file_list:
-            with open(file_list, "r") as f:
-                valid_files = set(f.read().splitlines())
+        if file_list is not None:
+            if isinstance(file_list, str):
+                # It's a path to a .TXT file
+                with open(file_list, "r") as f:
+                    valid_files = set(f.read().splitlines())
+            elif isinstance(file_list, list):
+                # It's already a Python list (after splitting)
+                valid_files = set(file_list)
+            else:
+                raise ValueError("file_list must be a list of filenames or a path to a file")
+            
             self.data = self.data[self.data["Image Index"].isin(valid_files)]
 
         # Convert multi-label strings into binary columns for each class
