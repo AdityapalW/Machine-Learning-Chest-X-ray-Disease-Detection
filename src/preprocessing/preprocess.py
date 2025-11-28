@@ -13,6 +13,15 @@ def get_transforms(train=True):
             transforms.Resize((224, 224)),
             transforms.RandomHorizontalFlip(),  # Add augmentation to prevent overfitting.
             transforms.RandomRotation(10),
+             transforms.RandomAffine(
+                degrees=10,
+                translate=(0.05, 0.05),
+                scale=(0.95, 1.05)
+            ),
+            transforms.ColorJitter(
+                brightness=0.1,
+                contrast=0.1
+            ),
             transforms.ToTensor(),  # Convert PIL image to PyTorch tensor.
             transforms.Normalize(  # Normalize for ImageNet pre-training data.
                 mean=[0.485, 0.456, 0.406],
