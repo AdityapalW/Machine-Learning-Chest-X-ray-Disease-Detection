@@ -65,5 +65,9 @@ def main():
     test_loss, test_acc = evaluate_model(model, test_loader, device, loss_fn)
     print(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_acc:.4f}")
 
+    # Save the trained model
+    torch.save(model.state_dict(), "models/custom_cnn_chestxray.pth")
+    print("Model saved to models/custom_cnn_chestxray.pth")
+
 if __name__ == "__main__":
     main()
