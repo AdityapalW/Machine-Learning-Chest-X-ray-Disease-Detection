@@ -10,9 +10,7 @@ project-root/
 │   .gitignore             # Files ignored by Git
 │
 ├── data/
-│   ├── raw/               # Unmodified source data
-│   ├── processed/         # Preprocessed/cleaned data
-│   └── external/          # Third-party or external sources
+│   └── raw/               # Unmodified source data
 │
 │
 ├── src/
