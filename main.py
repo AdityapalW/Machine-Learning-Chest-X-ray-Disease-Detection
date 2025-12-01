@@ -66,7 +66,7 @@ def main():
     print(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_acc:.4f}")
 
     # Save the trained model
-    torch.save(model.state_dict(), "models/custom_cnn_chestxray.pth")
+    torch.save(model.state_dict(), "src/models/custom_cnn_chestxray.pth")
     print("Model saved to models/custom_cnn_chestxray.pth")
 
 if __name__ == "__main__":
