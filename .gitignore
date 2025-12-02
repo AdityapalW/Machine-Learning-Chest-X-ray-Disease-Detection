@@ -10,6 +10,9 @@ __pycache__/
 data/raw/
 data/processed/
 
+# Saved models
+src/models/*.pth
+
 # Distribution / packaging
 .Python
 build/
