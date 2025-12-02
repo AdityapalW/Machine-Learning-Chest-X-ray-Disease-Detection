@@ -2,28 +2,20 @@ import torch
 from src.datasets.dataset import ChestXrayDataset
 from src.datasets.dataloader import get_dataloader
 from src.datasets.utils import split_dataset
+from src.datasets.utils import compute_mean_std
 from src.preprocessing.preprocess import get_transforms
-from models.custom_cnn import CustomCNN
+from src.models.custom_cnn import CustomCNN
 from src.training.loss import get_loss_function
 from src.training.train import train_model
 from src.evaluation.evaluate import evaluate_model
 
 def main():
     data_csv = "data/raw/sample_labels.CSV"  # CSV file with image labels
-    '''
-    train_val_files = "data/raw/TRAIN_VAL_LIST_NIH.TXT"  # File list for training/validation
-    test_files = "data/raw/TEST_LIST_NIH.TXT"  # File list for testing
-    bbox_csv = "data/raw/BBOX_LIST_2017_OFFICIAL_NIH.CSV"  # Bounding box annotations (not used in main)
-    '''
     img_dir = "data/raw/images"  # Directory containing the images
     num_epochs = 10
     batch_size = 32
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available, else CPU
     lr = 1e-4  # Learning rate for optimizer
-
-    # Get transforms for training and validation
-    train_transforms = get_transforms(train=True)  # Applies augmentation for training
-    val_transforms = get_transforms(train=False)  # No augmentation for validation
 
     # Class names for multi-label classification
     class_names = [
@@ -35,6 +27,12 @@ def main():
 
     ## train_val_list = load_file_list(train_val_files)
     train_df, val_df, test_df = split_dataset(data_csv, val_size=0.15, test_size=0.15, random_state=42)
+
+    mean, std = compute_mean_std(train_df, img_dir, class_names=class_names)
+
+    # Get transforms for training and validation
+    train_transforms = get_transforms(mean, std, train=True)  # Applies augmentation for training
+    val_transforms = get_transforms(mean, std, train=False)  # No augmentation for validation
 
     # Create datasets, filtering by file lists
     train_dataset = ChestXrayDataset(train_df, img_dir, train_transforms, class_names)
@@ -50,7 +48,6 @@ def main():
     print(f"Number of validation samples: {len(val_dataset)}")
 
     # Get model, loss function, and optimizer
-    # model = CustomCNN()
     model = CustomCNN(num_classes=len(class_names))
     model = model.to(device)
     loss_fn = get_loss_function()
