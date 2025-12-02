@@ -69,6 +69,8 @@ def train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs,
             "optimizer_state": optimizer.state_dict(),
             "train_loss": history["train_loss"],
             "val_loss": history["val_loss"],
+            "train_acc": history["train_acc"],
+            "val_acc": history["val_acc"],
             "num_epochs": epoch + 1
         }
 
