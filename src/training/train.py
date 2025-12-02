@@ -1,6 +1,13 @@
 from tqdm import tqdm
 import torch
 
+
+def compute_accuracy(logits, labels):
+    preds = torch.argmax(logits, dim=1)
+    correct = (preds == labels).sum().item()
+    total = labels.size(0)
+    return correct, total
+
 def train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs, device, scaler=None, save_path="checkpoint.pth"):
     """
     Trains the model for a specified number of epochs and validates it after each epoch.
