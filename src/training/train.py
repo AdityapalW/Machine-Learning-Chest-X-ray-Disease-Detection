@@ -52,7 +52,7 @@ def train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs,
                 loss = loss_fn(logits, labels_multi)
                 val_loss += loss.item() * imgs.size(0)
 
-                correct, total = compute_accuracy(logits, labels)
+                correct, total = compute_accuracy(logits, labels_multi)
                 correct_total += correct
                 total_samples += total
 
