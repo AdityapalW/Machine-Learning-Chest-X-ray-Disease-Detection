@@ -10,8 +10,8 @@ from src.training.train import train_model
 from src.evaluation.evaluate import evaluate_model
 
 def main():
-    data_csv = "data/raw/sample_labels.CSV"  # CSV file with image labels
-    img_dir = "data/raw/images"  # Directory containing the images
+    data_csv = "datasets/sample/sample_labels.csv"  # CSV file with image labels
+    img_dir = "datasets/sample/images"  # Directory containing the images
     num_epochs = 10
     batch_size = 32
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available, else CPU
@@ -55,7 +55,7 @@ def main():
 
     print("Starting training...")
     # Train the model
-    train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs, device)  # Trains for num_epochs
+    train_losses, val_losses = train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs, device)  # Trains for num_epochs
 
     print("Training complete!")
 
