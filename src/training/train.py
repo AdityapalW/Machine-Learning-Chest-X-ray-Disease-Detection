@@ -3,9 +3,9 @@ import torch
 
 
 def compute_accuracy(logits, labels):
-    preds = torch.argmax(logits, dim=1)
+    preds = (torch.sigmoid(logits) > 0.5).float()
     correct = (preds == labels).sum().item()
-    total = labels.size(0)
+    total = labels.numel()
     return correct, total
 
 def train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs, device, scaler=None, save_path="checkpoint.pth"):
