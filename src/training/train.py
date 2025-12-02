@@ -104,7 +104,7 @@ def train_one_epoch(model, loader, criterion, optimizer, device, scaler=None):
         running_loss += loss.item() * imgs.size(0)
 
         # compute accuracy
-        correct, total = compute_accuracy(logits, labels)
+        correct, total = compute_accuracy(logits, labels_multi)
         correct_total += correct
         total_samples += total
 
