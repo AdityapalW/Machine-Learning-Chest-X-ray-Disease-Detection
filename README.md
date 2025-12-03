@@ -49,7 +49,6 @@ The main dependencies are:
 - scikit-learn
 - Pillow
 - tqdm
-- streamlit (for the web app)
 
 ## Dataset
 
