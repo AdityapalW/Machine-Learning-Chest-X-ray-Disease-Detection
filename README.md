@@ -126,7 +126,7 @@ Training is done from [`main.py`](main.py):
 4. **Final evaluation**
    - After training, the best model is evaluated on the test split using [`src.evaluation.evaluate.evaluate_model`](src/evaluation/evaluate.py), which:
      - Computes average loss.
-     - Applies `sigmoid` + 0.5 threshold to get multi‑label predictions.
+     - Applies `sigmoid` + 0.5 threshold to get predictions.
      - Reports overall accuracy across all labels.
 
 
