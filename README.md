@@ -129,10 +129,5 @@ Training is done from [`main.py`](main.py):
      - Reports overall accuracy across all labels.
 
 
-## Results
-After training, the model achieved the following performance metrics:
 
-- **Accuracy**: 
-- **Precision**: 
-- **Recall**: 
-- **AUC**: 
+
