@@ -1,7 +1,6 @@
 from tqdm import tqdm
 import torch
 
-
 def compute_accuracy(logits, labels):
     preds = (torch.sigmoid(logits) > 0.5).float()
     correct = (preds == labels).sum().item()
