@@ -10,8 +10,8 @@ from src.training.train import train_model
 from src.evaluation.evaluate import evaluate_model
 
 def main():
-    data_csv = "datasets/sample/sample_labels.csv"  # CSV file with image labels
-    img_dir = "datasets/sample/images"  # Directory containing the images
+    data_csv = "data/sample/sample_labels.csv"  # CSV file with image labels
+    img_dir = "data/sample/images"  # Directory containing the images
     num_epochs = 10
     batch_size = 32
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available, else CPU
