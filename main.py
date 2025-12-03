@@ -12,7 +12,7 @@ from src.evaluation.evaluate import evaluate_model
 def main():
     data_csv = "data/sample/sample_labels.csv"  # CSV file with image labels
     img_dir = "data/sample/images"  # Directory containing the images
-    num_epochs = 10
+    num_epochs = 5
     batch_size = 32
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available, else CPU
     lr = 1e-4  # Learning rate for optimizer
@@ -55,7 +55,7 @@ def main():
 
     print("Starting training...")
     # Train the model
-    train_losses, val_losses = train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs, device)  # Trains for num_epochs
+    train_model(model, train_loader, val_loader, loss_fn, optimizer, num_epochs, device)  # Trains for num_epochs
 
     print("Training complete!")
 
