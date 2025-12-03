@@ -14,7 +14,7 @@ class CustomCNN(nn.Module):
 
         self.pool = nn.MaxPool2d(2, 2)
         # after 3 poolings, spatial dims reduced by 8x: assume input 224 -> ~28
-        self.fc1 = nn.Linear(128 * 28 * 28, 256)
+        self.fc1 = nn.Linear(128, 256)
         self.drop = nn.Dropout(0.5)
         self.fc2 = nn.Linear(256, num_classes)  # num_classes logits
 
@@ -35,6 +35,7 @@ class CustomCNN(nn.Module):
         x = F.relu(self.bn3(self.conv3(x)))
         x = self.pool(x)
 
+        x = F.adaptive_avg_pool2d(x, (1, 1))
         x = torch.flatten(x, 1)
         x = F.relu(self.fc1(x))
         x = self.drop(x)
