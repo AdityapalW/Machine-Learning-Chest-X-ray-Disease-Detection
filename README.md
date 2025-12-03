@@ -9,6 +9,8 @@ project-root/
 │   README.md                      # Project overview and instructions
 │   requirements.txt               # Python dependencies
 │   .gitignore                     # Files ignored by Git
+│   main.py                        # Main file
+│   pipeline.ipynb                 # Jupyter Notebook
 │
 ├── data/
 │   └── raw/                       # Unmodified source data
@@ -20,7 +22,7 @@ project-root/
     ├── models/                    # Model architectures, CNN here
     ├── training/                  # Training and validation routines
     ├── evaluation/                # Metrics and analysis
-    └── utils.py                   # Helper functions
+    └── datasets/                  # Dataset functions
 ```
 
 
