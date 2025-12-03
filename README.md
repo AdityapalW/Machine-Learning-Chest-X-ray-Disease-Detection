@@ -87,14 +87,19 @@ The project uses a custom convolutional neural network (CNN) defined in [`src/mo
    ```bash
    cd Machine-Learning-Chest-X-ray-Disease-Detection
    ```
-
-4. Start the training:
+   
+4. Install required python packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+   
+5. Start the training:
 
    ```bash
    python main.py
    ```
 
-5. Evaluate the model:
+6. Evaluate the model:
 
    ```bash
    python visualize.py
