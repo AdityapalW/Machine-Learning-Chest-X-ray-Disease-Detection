@@ -31,7 +31,6 @@ project-root/
 3. [Model Architecture](#model-architecture)
 4. [Usage](#usage)
 5. [Training and Evaluation](#training-and-evaluation)
-6. [Results](#results)
 
 
 ## Installation
